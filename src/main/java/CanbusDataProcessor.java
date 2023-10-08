@@ -151,12 +151,14 @@ public class CanbusDataProcessor {
             CSVParser csvParser = CSVParser.parse(reader, CSVFormat.DEFAULT.withHeader().withSkipHeaderRecord());
 
             List<String> headers = csvParser.getHeaderNames();
+            System.out.println(headers);
             System.out.println("Processing decoded CSV data from file: " + decodedFilePath);
 
             for (CSVRecord csvRecord : csvParser) {
                 List<String> data = new ArrayList<>();
                 for (String header : headers) {
-                    data.add(csvRecord.get(header));
+                    String cellValue = Optional.of(csvRecord.get(header)).orElse("");
+                    data.add(cellValue);
                 }
                 DecodedData decodedData = new DecodedData(data);
                 decodedDataList.add(decodedData);
