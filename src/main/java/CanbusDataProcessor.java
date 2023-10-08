@@ -12,6 +12,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CanbusDataProcessor {
+
+    // Define the headers you want to keep from the decoded file
+    private static final List<String> headersToKeep =Arrays.asList(
+            "Time",
+            "ID",
+            "MAP___mBar",
+            "GEAR",
+            "TPS___percentage",
+            "RPM___rpm",
+            "LAMDA_SENSOR"
+    );
+
     public static void main(String[] args) {
         try {
             // Get the current working directory
@@ -106,27 +118,30 @@ public class CanbusDataProcessor {
             } else {
                 System.out.println("Date not found in the input.");
             }
-            String timestamp2 = "1696779.278161";
-            double timestampValue = Double.parseDouble(timestamp2);
-            System.out.println("Parsed timestamp 2: " + timestampValue);
-            System.out.println("timestampDate: " + timestampDate);
-            Map<String, String> finalData = new HashMap<>();
 
+            Map<String, List<String>> finalData = new HashMap<>();
+            for(DecodedData row: decodedDataSet) {
+                String timestamp = row.data.remove(0);
+                List<String> existingData = finalData.get(timestamp);
+                if (existingData == null) existingData = new ArrayList<>();
+                existingData.addAll(row.data);
+                finalData.put(timestamp, existingData);
+            }
+
+            System.out.println("finalData.size(): " + finalData.size());
 
             // Write data from rawDataSet and corresponding data from decodedDataSet
-            int dataSize = Math.min(rawDataSet.size(), decodedDataSet.size());
-            for (int i = 0; i < dataSize; i++) {
-                RawData raw = rawDataSet.get(i);
-                DecodedData decoded = decodedDataSet.get(i);
 
-                List<String> rowData = new ArrayList<>();
-                rowData.add(String.valueOf(lapId));
-                rowData.addAll(decoded.getData());
+            finalData.forEach((s, strings) -> {
+                strings.add(0, String.valueOf(lapId));
+                try {
+                    writer.write(String.join(",", strings));
+                    writer.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
-                // Replace "your_data_here" with the actual data you want to include
-                writer.write(String.join(",", rowData));
-                writer.newLine();
-            }
         }
     }
 
@@ -147,6 +162,7 @@ public class CanbusDataProcessor {
     private static List<DecodedData> processDecodedCsv(String decodedFilePath) throws IOException {
         List<DecodedData> decodedDataList = new ArrayList<>();
         Path path = Paths.get(decodedFilePath);
+
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
             CSVParser csvParser = CSVParser.parse(reader, CSVFormat.DEFAULT.withHeader().withSkipHeaderRecord());
 
@@ -157,13 +173,16 @@ public class CanbusDataProcessor {
             for (CSVRecord csvRecord : csvParser) {
                 List<String> data = new ArrayList<>();
                 for (String header : headers) {
-                    String cellValue = Optional.of(csvRecord.get(header)).orElse("");
-                    data.add(cellValue);
+                    if (headersToKeep.contains(header)) {
+                        String cellValue = Optional.of(csvRecord.get(header)).orElse("");
+                        data.add(cellValue);
+                    }
                 }
                 DecodedData decodedData = new DecodedData(data);
                 decodedDataList.add(decodedData);
             }
         }
+        System.out.println("decodedDataList: "+ decodedDataList.stream().findAny().get().data);
         return decodedDataList;
     }
 
