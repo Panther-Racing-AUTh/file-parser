@@ -133,15 +133,17 @@ public class CanbusDataProcessor {
             // Write data from rawDataSet and corresponding data from decodedDataSet
 
             finalData.forEach((canbusTimestamp, strings) -> {
-                strings.add(0, String.valueOf(lapId));
-                strings.add(0, canbusTimestamp);
-                System.out.println("strings: " + strings);
-                try {
-                    writer.write(String.join(",", strings));
-                    writer.newLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                strings.forEach(s -> {
+                    s = lapId + "," + canbusTimestamp + "," + s;
+                    System.out.println("s: " + s);
+                    try {
+                        writer.write(s);
+                        writer.newLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
             });
 
         }
