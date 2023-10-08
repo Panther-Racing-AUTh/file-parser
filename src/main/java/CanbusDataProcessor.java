@@ -124,7 +124,7 @@ public class CanbusDataProcessor {
                 String timestamp = row.data.remove(0);
                 List<String> existingData = finalData.get(timestamp);
                 if (existingData == null) existingData = new ArrayList<>();
-                existingData.addAll(row.data);
+                existingData.add(String.join(",", (row.data)));
                 finalData.put(timestamp, existingData);
             }
 
@@ -132,8 +132,10 @@ public class CanbusDataProcessor {
 
             // Write data from rawDataSet and corresponding data from decodedDataSet
 
-            finalData.forEach((s, strings) -> {
+            finalData.forEach((canbusTimestamp, strings) -> {
                 strings.add(0, String.valueOf(lapId));
+                strings.add(0, canbusTimestamp);
+                System.out.println("strings: " + strings);
                 try {
                     writer.write(String.join(",", strings));
                     writer.newLine();
