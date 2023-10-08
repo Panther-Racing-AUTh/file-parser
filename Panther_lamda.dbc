@@ -1,0 +1,365 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Data_Logger ECU_AiM_Taipan
+VAL_TABLE_ vt_ENG_STATE 3 "Stop" 2 "Running" 1 "Running" 0 "Cranking" ;
+VAL_TABLE_ vt_ENG_POS 4 "Not Allowed to Run" 3 "Phased" 2 "Samiphased" 1 "Semiphased" 0 "Seek" ;
+VAL_TABLE_ vt_EngineDiagLL 128 "NotUsed" 64 "Ignition open load" 32 "Ignition over current" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_TABLE_ vt_EngineDiagLH 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_TABLE_ vt_EngineDiagHL 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "Launch Ctrl LED open load" 4 "Launch Ctrl LED over current" 2 "Launch Ctrl LED over temperature" 1 "Launch Ctrl LED short to ground " ;
+VAL_TABLE_ vt_EngineDiagHH 128 "Inj1 open load" 64 "Inj1 over current" 32 "Inj1 over temperature" 16 "Inj1 short to ground" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_TABLE_ vt_EngFlag 32768 "RPM limiter active" 16384 "Launch switch pressed" 8192 "Map switch pressed" 4096 "Over Injection detected" 2048 "Kill switch pressed" 1024 "Engine off for Accel drop sensor" 512 "Engine off for ECU flashing" 256 "Map1 is Valid" 128 "Map2 is Valid" 64 "Map3 is Valid (Only Moto3)" 32 "Not Used" 16 "Not Used" 8 "Not Used" 4 "Not Used" 2 "Not Used" 1 "Not Used" ;
+VAL_TABLE_ vt_AnalogDiagLL 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_TABLE_ vt_AnalogDiagLH 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_TABLE_ vt_AnalogDiagHL 128 "GEAR sensor signal too low" 64 "GEAR sensor signal too high" 32 "IAT sensor signal too low" 16 "IAT sensor signal too high" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_TABLE_ vt_AnalogDiagHH 128 "MAP sensor signal too low" 64 "MAP sensor signal too high" 32 "TPS sensor signal too low" 16 "TPS sensor signal too high" 8 "Battery voltage level too low" 4 "Battery voltage level too high" 2 "ECT sensor signal too low" 1 "ECT sensor signal too high" ;
+VAL_TABLE_ vt_Launch_State 3 "Disengaged - DIS" 2 "Engaged - ENG" 1 "Active - ACT" 0 "Not Active - NOTA" ;
+
+
+BO_ 1037 TX_Msg_14: 8 ECU_AiM_Taipan
+ SG_ INJ_TC_CORR : 23|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ IGN_TC_CORR : 7|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ ENG_STATE : 55|16@0+ (1,0) [0|65535] "#"  Data_Logger
+ SG_ ENG_POS : 39|16@0+ (1,0) [0|65535] "#"  Data_Logger
+
+BO_ 1034 TX_Msg_11: 8 ECU_AiM_Taipan
+ SG_ INJ2_PERC : 23|16@0+ (0.1,0) [0|6553.5] "%"  Data_Logger
+ SG_ INJ1_PERC : 7|16@0+ (0.1,0) [0|6553.5] "%"  Data_Logger
+ SG_ INJ2_PHASE : 55|16@0- (0.1,-360) [-3636.8|2916.7] "deg"  Data_Logger
+
+BO_ 1032 TX_Msg_09: 8 ECU_AiM_Taipan
+ SG_ TRIM_CORR : 55|16@0- (0.1,-100) [-3376.8|3176.7] "%"  Data_Logger
+ SG_ SMOT_ERR_CNT : 7|16@0+ (1,0) [0|65535] "#"  Data_Logger
+ SG_ INJ_CRANK_CORR : 23|16@0- (0.1,-100) [-3376.8|3176.7] "%"  Data_Logger
+ SG_ INJ1_BATT_CORR : 39|16@0+ (1,0) [0|65535] "us"  Data_Logger
+
+BO_ 1031 TX_Msg_08: 8 ECU_AiM_Taipan
+ SG_ INJ_BASE_TIME : 23|16@0+ (1,0) [0|65535] "ms"  Data_Logger
+ SG_ INJ1_TIME : 55|16@0+ (1,0) [0|65535] "us"  Data_Logger
+ SG_ INJ1_PHASE : 39|16@0- (0.1,-360) [-3636.8|2916.7] "deg"  Data_Logger
+ SG_ INJ1_BASE_PHASE : 7|16@0- (0.1,-360) [-3636.8|2916.7] "deg"  Data_Logger
+
+BO_ 1030 TX_Msg_07: 8 ECU_AiM_Taipan
+ SG_ INJ_IAT_CORR : 55|16@0- (0.1,-100) [-3376.8|3176.7] "%"  Data_Logger
+ SG_ INJ_ECT_CORR : 39|16@0- (0.1,-100) [-3376.8|3176.7] "%"  Data_Logger
+ SG_ IGN_IAT_CORR : 23|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ IGN_ECT_CORR : 7|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+
+BO_ 1025 TX_Msg_02: 8 ECU_AiM_Taipan
+ SG_ IAT_CNT : 23|16@0+ (1,0) [0|65535] "#"  Data_Logger
+ SG_ GEAR_CNT : 7|16@0+ (1,0) [0|65535] "#"  Data_Logger
+
+BO_ 1024 TX_Msg_01: 8 ECU_AiM_Taipan
+ SG_ ECT_CNT : 55|16@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ BATTERY_CNT : 39|16@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ TPS_CNT : 23|16@0+ (1,0) [0|65535] ""  Data_Logger
+ SG_ MAP_CNT : 7|16@0+ (1,0) [0|65535] "#"  Data_Logger
+
+BO_ 1040 TX_Msg_17: 8 ECU_AiM_Taipan
+ SG_ RPM_MEAN_ACC : 39|32@0- (1,0) [0|0] "#"  Data_Logger
+ SG_ ENG_REV : 7|32@0+ (1,0) [0|0] "rev"  Data_Logger
+
+BO_ 1042 TX_Msg_19: 8 ECU_AiM_Taipan
+ SG_ INJ_USER_CORR : 23|16@0- (0.1,-100) [-3376.8|3176.7] "%"  Data_Logger
+ SG_ IGN_USER_CORR : 39|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ LAMBDA : 7|16@0+ (0.001,0) [0|65.535] "?"  Data_Logger
+ SG_ TC_MAP_LEV : 55|16@0+ (1,0) [0|65535] "#"  Data_Logger
+
+BO_ 1041 TX_Msg_18: 8 ECU_AiM_Taipan
+ SG_ DROP_V : 7|16@0+ (1,0) [0|65535] "mV"  Data_Logger
+ SG_ SPARE_CH_2 : 39|16@0+ (1,0) [0|65535] "mV"  Data_Logger
+ SG_ SPARE_CH_1 : 23|16@0+ (1,0) [0|65535] "mV"  Data_Logger
+
+BO_ 1039 TX_Msg_16: 8 ECU_AiM_Taipan
+ SG_ ANALOG_DIAG_LL : 63|8@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ ANALOG_DIAG_LH : 55|8@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ ANALOG_DIAG_HL : 47|8@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ ANALOG_DIAG_HH : 39|8@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ ENG_DIAG_LL : 31|8@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ ENG_DIAG_LH : 23|8@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ ENG_DIAG_HL : 15|8@0+ (1,0) [0|255] "#"  Data_Logger
+ SG_ ENG_DIAG_HH : 7|8@0+ (1,0) [0|255] "#"  Data_Logger
+
+BO_ 1038 TX_Msg_15: 8 ECU_AiM_Taipan
+ SG_ REF_TIME : 7|32@0+ (1,0) [0|4294967295] "us"  Data_Logger
+ SG_ LAUNCH_STATE : 55|16@0+ (1,0) [0|0] "#"  Data_Logger
+ SG_ MAP_SEL : 39|16@0+ (1,0) [0|65535] "#"  Data_Logger
+
+BO_ 1036 TX_Msg_13: 8 ECU_AiM_Taipan
+ SG_ INJ_TRANS_CORR : 23|16@0- (0.1,-100) [-3376.8|3176.7] "%"  Data_Logger
+ SG_ IGN_TRANS_CORR : 39|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ DTPS : 7|16@0- (1,0) [-32768|32767] ""  Data_Logger
+ SG_ ENG_FLAG : 55|16@0+ (1,0) [0|65535] "#"  Data_Logger
+
+BO_ 1035 TX_Msg_12: 8 ECU_AiM_Taipan
+ SG_ INJ2_TIME : 7|16@0+ (1,0) [0|65535] "us"  Data_Logger
+ SG_ INJ2_BATT_CORR : 23|16@0+ (1,0) [0|65535] "us"  Data_Logger
+ SG_ USAGE_TIME_MIN : 55|16@0+ (1,0) [0|65535] "min"  Data_Logger
+ SG_ USAGE_TIME_SEC : 39|16@0+ (1,0) [0|65535] "s"  Data_Logger
+
+BO_ 1033 TX_Msg_10: 8 ECU_AiM_Taipan
+ SG_ INJ_BAP_CORR : 23|16@0- (0.1,-100) [-3376.8|3176.7] "%"  Data_Logger
+ SG_ IGN_BAP_CORR : 7|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ ECU_SN : 39|32@0+ (1,0) [0|0] "#"  Data_Logger
+
+BO_ 1029 TX_Msg_06: 8 ECU_AiM_Taipan
+ SG_ INJ_TIME : 55|16@0+ (1,0) [0|65535] "us"  Data_Logger
+ SG_ IGN_BASE_ADV : 39|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ IGN_ADV : 23|16@0- (0.1,0) [-3276.8|3276.7] "deg"  Data_Logger
+ SG_ RPM : 7|16@0+ (1,0) [0|65535] "rpm"  Data_Logger
+
+BO_ 1028 TX_Msg_05: 8 ECU_AiM_Taipan
+ SG_ BAROMETRIC_P : 55|16@0+ (1,0) [0|65535] "mBar"  Data_Logger
+ SG_ ECU_T : 39|16@0- (1,0) [-32768|32767] "�C"  Data_Logger
+ SG_ IAT : 23|16@0- (0.1,0) [-3276.8|3276.7] "�C"  Data_Logger
+ SG_ ECT : 7|16@0- (0.1,0) [-3276.8|3276.7] "�C"  Data_Logger
+
+BO_ 1027 TX_Msg_04: 8 ECU_AiM_Taipan
+ SG_ VREF : 55|16@0+ (1,0) [0|65535] "mV"  Data_Logger
+ SG_ BATT : 7|16@0+ (1,0) [0|65535] "mV"  Data_Logger
+
+BO_ 1026 TX_Msg_03: 8 ECU_AiM_Taipan
+ SG_ RPM_360 : 55|16@0+ (1,0) [0|65535] "rpm"  Data_Logger
+ SG_ MAP : 7|16@0+ (1,0) [0|65535] "mBar"  Data_Logger
+ SG_ GEAR : 39|16@0+ (1,0) [0|0] "#"  Data_Logger
+ SG_ TPS : 23|16@0+ (0.1,0) [0|6553.5] "%"  Data_Logger
+
+BO_ 18 PANTHER_LAMDA: 2 Vector__XXX
+ SG_ LAMDA_SENSOR : 0|16@1+ (0.01,0) [0|0] "" Vector__XXX
+
+
+
+CM_ SG_ 1037 INJ_TC_CORR "Injection Traction Control Corrections";
+CM_ SG_ 1037 IGN_TC_CORR "Ignition Traction Control Corrections";
+CM_ SG_ 1037 ENG_STATE "Engine Estate";
+CM_ SG_ 1037 ENG_POS "Engine Position";
+CM_ SG_ 1034 INJ2_PERC "Injector 2 Precentual";
+CM_ SG_ 1034 INJ1_PERC "Injector 1 Precentual";
+CM_ SG_ 1034 INJ2_PHASE "Injector 2 Phase";
+CM_ SG_ 1032 TRIM_CORR "AiM Handle Bar Switch Trimmer Correction";
+CM_ SG_ 1032 SMOT_ERR_CNT "Syncronism Error Counter";
+CM_ SG_ 1032 INJ_CRANK_CORR "Injectiron Crank Correction";
+CM_ SG_ 1032 INJ1_BATT_CORR "Injection Battery Voltage Correction Injector 1";
+CM_ SG_ 1031 INJ_BASE_TIME "Injectiron Base time";
+CM_ SG_ 1031 INJ1_TIME "Injection Time Injector 1";
+CM_ SG_ 1031 INJ1_PHASE "Injector 1 Phase";
+CM_ SG_ 1031 INJ1_BASE_PHASE "Injector 1 Base Phase";
+CM_ SG_ 1030 INJ_IAT_CORR "Injectiron ECT Correction";
+CM_ SG_ 1030 INJ_ECT_CORR "Injectiron ECT Correction";
+CM_ SG_ 1030 IGN_IAT_CORR "Ignition IAT Correction";
+CM_ SG_ 1030 IGN_ECT_CORR "Ignition ECT Correction";
+CM_ SG_ 1025 IAT_CNT "Intake Air Temperature Counter";
+CM_ SG_ 1025 GEAR_CNT "Gear Counter";
+CM_ SG_ 1024 ECT_CNT "Engine Coolant Temperature Counter";
+CM_ SG_ 1024 BATTERY_CNT "Voltage Battery Counter";
+CM_ SG_ 1024 TPS_CNT "Throttle Position Sensor";
+CM_ SG_ 1024 MAP_CNT "Manifold Air Pressure Counter";
+CM_ SG_ 1040 ENG_REV "Engine Revolutions Counter";
+CM_ SG_ 1042 INJ_USER_CORR "Injectiron User Correction";
+CM_ SG_ 1042 IGN_USER_CORR "Ignition User Correction";
+CM_ SG_ 1042 LAMBDA "Lambda Values";
+CM_ SG_ 1042 TC_MAP_LEV "Traction Control Level - Only Moto3";
+CM_ SG_ 1041 DROP_V "Drop Sensor Voltage";
+CM_ SG_ 1041 SPARE_CH_2 "Spare Channel 2 Voltage - Quick Shift";
+CM_ SG_ 1041 SPARE_CH_1 "Spare Channel 1 Voltage - Pit Limiter";
+CM_ SG_ 1039 ENG_DIAG_HL "Launch Control Diagnostic - Only Moto3";
+CM_ SG_ 1038 REF_TIME "Reference Time";
+CM_ SG_ 1038 LAUNCH_STATE "Launch Control State - Only Moto3";
+CM_ SG_ 1038 MAP_SEL "Engine Map Selected";
+CM_ SG_ 1036 INJ_TRANS_CORR "Injection Transient Corrections";
+CM_ SG_ 1036 IGN_TRANS_CORR "Ignition Transient Corrections";
+CM_ SG_ 1036 DTPS "Derivative of TPS";
+CM_ SG_ 1035 INJ2_TIME "Injection Time Injector 2";
+CM_ SG_ 1035 INJ2_BATT_CORR "Injection Battery Voltage Correction Injector 2";
+CM_ SG_ 1035 USAGE_TIME_MIN "Engine Hours Counter Minute";
+CM_ SG_ 1035 USAGE_TIME_SEC "Engine Hours Counter Seconds";
+CM_ SG_ 1033 INJ_BAP_CORR "Injection BAP Corrections";
+CM_ SG_ 1033 IGN_BAP_CORR "Ignition BAP Correction";
+CM_ SG_ 1033 ECU_SN "ECU Serial Number";
+CM_ SG_ 1029 INJ_TIME "Injection Total Time";
+CM_ SG_ 1029 IGN_BASE_ADV "Ignition Advance Base";
+CM_ SG_ 1029 IGN_ADV "Ignition Advance";
+CM_ SG_ 1029 RPM "Engine Speed";
+CM_ SG_ 1028 BAROMETRIC_P "Barometric Pressure";
+CM_ SG_ 1028 ECU_T "ECU Temperature";
+CM_ SG_ 1028 IAT "Intake Air Temperature";
+CM_ SG_ 1028 ECT "Engine Coolant Temperature";
+CM_ SG_ 1027 VREF "Reference Voltage";
+CM_ SG_ 1027 BATT "Battery Voltage";
+CM_ SG_ 1026 RPM_360 "Engine Speed calculated from 360 degrees";
+CM_ SG_ 1026 MAP "Mainfold Air Pressure";
+CM_ SG_ 1026 GEAR "Gear";
+CM_ SG_ 1026 TPS "Throttle Position";
+BA_DEF_ SG_  "GenSigSendType" ENUM  "NotUsed","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType";
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 2147483647;
+BA_DEF_ SG_  "Event trans." ENUM  "Yes","No";
+BA_DEF_ SG_  "Accuracy" STRING ;
+BA_DEF_ BO_  "DiagState" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgDelayTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 0 65535;
+BA_DEF_ BO_  "GenMsgStartDelayTime" INT 0 65535;
+BA_DEF_ BO_  "GenMsgILSupport" ENUM  "No","Yes";
+BA_DEF_ BO_  "GenMsgNrOfRepetition" INT 0 255;
+BA_DEF_ BO_  "GenMsgTimeoutTime" INT 0 10000;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Cyclic","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","NoMsgSendType";
+BA_DEF_ BO_  "NmMessage" ENUM  "No","Yes";
+BA_DEF_ BO_  "DiagResponse" ENUM  "No","Yes";
+BA_DEF_ BO_  "Type" ENUM  "P","C","PE","COC","PE_Cntrl","E","E_Cntrl","OC","S","BAF","DC","EM","MM","-";
+BA_DEF_ BO_  "Period [ms]" INT 0 65535;
+BA_DEF_ BO_  "DiagRequest" ENUM  "No","Yes";
+BA_DEF_ BU_  "TpOwnSystemEcuNumber" HEX 0 255;
+BA_DEF_ BU_  "NwmNodeType" ENUM  "kMaster","kSlave15","kSlave30","none";
+BA_DEF_ BU_  "NmNodeType" ENUM  "kMaster","kSlave15","kSlave30","none";
+BA_DEF_ BU_  "NmNode" ENUM  "No","Yes";
+BA_DEF_ BU_  "NmStationAddress" HEX 0 255;
+BA_DEF_ BU_  "Description" STRING ;
+BA_DEF_  "Version" HEX 0 255;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "NmType" STRING ;
+BA_DEF_ SG_  "GenSigStartValue" FLOAT 0 0;
+BA_DEF_  "TemplateVersion" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_ BU_  "ILUsed" ENUM  "No","Yes";
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_  "Baudrate" INT 125000 1000000;
+BA_DEF_  "Manufacturer" STRING ;
+BA_DEF_  "VersionNumber" INT 0 0;
+BA_DEF_  "VersionDay" INT 0 31;
+BA_DEF_  "VersionMonth" INT 0 12;
+BA_DEF_  "VersionYear" INT 0 0;
+BA_DEF_  "VersionWeek" INT 0 0;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "GenSigSendType" "NoSigSendType";
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "Event trans." "No";
+BA_DEF_DEF_  "Accuracy" "";
+BA_DEF_DEF_  "DiagState" "No";
+BA_DEF_DEF_  "GenMsgDelayTime" 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 0;
+BA_DEF_DEF_  "GenMsgStartDelayTime" 0;
+BA_DEF_DEF_  "GenMsgILSupport" "No";
+BA_DEF_DEF_  "GenMsgNrOfRepetition" 0;
+BA_DEF_DEF_  "GenMsgTimeoutTime" 0;
+BA_DEF_DEF_  "GenMsgSendType" "NoMsgSendType";
+BA_DEF_DEF_  "NmMessage" "No";
+BA_DEF_DEF_  "DiagResponse" "No";
+BA_DEF_DEF_  "Type" "-";
+BA_DEF_DEF_  "Period [ms]" 0;
+BA_DEF_DEF_  "DiagRequest" "No";
+BA_DEF_DEF_  "TpOwnSystemEcuNumber" 0;
+BA_DEF_DEF_  "NwmNodeType" "none";
+BA_DEF_DEF_  "NmNodeType" "none";
+BA_DEF_DEF_  "NmNode" "Yes";
+BA_DEF_DEF_  "NmStationAddress" 0;
+BA_DEF_DEF_  "Description" "";
+BA_DEF_DEF_  "Version" 160;
+BA_DEF_DEF_  "DBName" "CAN";
+BA_DEF_DEF_  "NmType" "";
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "TemplateVersion" "1.1.0.0";
+BA_DEF_DEF_  "ProtocolType" "Aerospace";
+BA_DEF_DEF_  "ILUsed" "No";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "Baudrate" 1000000;
+BA_DEF_DEF_  "Manufacturer" "<unknown>";
+BA_DEF_DEF_  "VersionNumber" 0;
+BA_DEF_DEF_  "VersionDay" 1;
+BA_DEF_DEF_  "VersionMonth" 1;
+BA_DEF_DEF_  "VersionYear" 0;
+BA_DEF_DEF_  "VersionWeek" 1;
+BA_DEF_DEF_  "BusType" "ARINC429";
+BA_ "VersionNumber" 1;
+BA_ "Version" 1;
+BA_ "Manufacturer" "AiM";
+BA_ "BusType" "CAN";
+BA_ "ProtocolType" "Motorsport";
+BA_ "VersionDay" 9;
+BA_ "VersionMonth" 2;
+BA_ "VersionYear" 22;
+BA_ "VersionWeek" 5;
+BA_ "DBName" "AiM_CAN_Tuner";
+BA_ "NmStationAddress" BU_ Data_Logger 1;
+BA_ "GenMsgCycleTime" BO_ 1037 5;
+BA_ "GenMsgCycleTime" BO_ 1034 10;
+BA_ "GenMsgCycleTime" BO_ 1032 1;
+BA_ "GenMsgCycleTime" BO_ 1031 1;
+BA_ "GenMsgCycleTime" BO_ 1030 1;
+BA_ "GenMsgCycleTime" BO_ 1040 10;
+BA_ "GenMsgCycleTimeFast" BO_ 1040 10;
+BA_ "Period [ms]" BO_ 1040 10;
+BA_ "GenMsgCycleTime" BO_ 1042 20;
+BA_ "GenMsgCycleTime" BO_ 1041 5;
+BA_ "GenMsgCycleTime" BO_ 1039 5;
+BA_ "GenMsgCycleTime" BO_ 1038 5;
+BA_ "GenMsgCycleTime" BO_ 1036 5;
+BA_ "GenMsgCycleTime" BO_ 1035 10;
+BA_ "GenMsgCycleTime" BO_ 1033 10;
+BA_ "GenMsgCycleTime" BO_ 1029 1;
+BA_ "GenMsgCycleTime" BO_ 1028 100;
+BA_ "GenMsgCycleTime" BO_ 1027 10;
+BA_ "GenMsgCycleTime" BO_ 1026 1;
+BA_ "GenSigStartValue" SG_ 1034 INJ2_PERC 0;
+BA_ "GenSigStartValue" SG_ 1034 INJ1_PERC 0;
+BA_ "GenSigStartValue" SG_ 1034 INJ2_PHASE 3600;
+BA_ "GenSigStartValue" SG_ 1032 TRIM_CORR 1000;
+BA_ "GenSigStartValue" SG_ 1032 INJ_CRANK_CORR 1000;
+BA_ "GenSigStartValue" SG_ 1032 INJ1_BATT_CORR 0;
+BA_ "GenSigStartValue" SG_ 1031 INJ_BASE_TIME 0;
+BA_ "GenSigStartValue" SG_ 1031 INJ1_TIME 0;
+BA_ "GenSigStartValue" SG_ 1031 INJ1_PHASE 3600;
+BA_ "GenSigStartValue" SG_ 1031 INJ1_BASE_PHASE 3600;
+BA_ "GenSigStartValue" SG_ 1030 INJ_IAT_CORR 1000;
+BA_ "GenSigStartValue" SG_ 1030 INJ_ECT_CORR 1000;
+BA_ "GenSigStartValue" SG_ 1042 INJ_USER_CORR 1000;
+BA_ "GenSigStartValue" SG_ 1036 INJ_TRANS_CORR 1000;
+BA_ "GenSigStartValue" SG_ 1035 INJ2_TIME 0;
+BA_ "GenSigStartValue" SG_ 1035 INJ2_BATT_CORR 0;
+BA_ "GenSigStartValue" SG_ 1033 INJ_BAP_CORR 1000;
+BA_ "GenSigStartValue" SG_ 1029 INJ_TIME 0;
+VAL_ 1037 ENG_STATE 3 "Stop" 2 "Running" 1 "Running" 0 "Cranking" ;
+VAL_ 1037 ENG_POS 4 "Not Allowed to Run" 3 "Phased" 2 "Samiphased" 1 "Semiphased" 0 "Seek" ;
+VAL_ 1039 ANALOG_DIAG_LL 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_ 1039 ANALOG_DIAG_LH 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_ 1039 ANALOG_DIAG_HL 128 "GEAR sensor signal too low" 64 "GEAR sensor signal too high" 32 "IAT sensor signal too low" 16 "IAT sensor signal too high" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_ 1039 ANALOG_DIAG_HH 128 "MAP sensor signal too low" 64 "MAP sensor signal too high" 32 "TPS sensor signal too low" 16 "TPS sensor signal too high" 8 "Battery voltage level too low" 4 "Battery voltage level too high" 2 "ECT sensor signal too low" 1 "ECT sensor signal too high" ;
+VAL_ 1039 ENG_DIAG_LL 128 "NotUsed" 64 "Ignition open load" 32 "Ignition over current" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_ 1039 ENG_DIAG_LH 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_ 1039 ENG_DIAG_HL 128 "NotUsed" 64 "NotUsed" 32 "NotUsed" 16 "NotUsed" 8 "Launch Ctrl LED open load" 4 "Launch Ctrl LED over current" 2 "Launch Ctrl LED over temperature" 1 "Launch Ctrl LED short to ground " ;
+VAL_ 1039 ENG_DIAG_HH 128 "Inj1 open load" 64 "Inj1 over current" 32 "Inj1 over temperature" 16 "Inj1 short to ground" 8 "NotUsed" 4 "NotUsed" 2 "NotUsed" 1 "NotUsed" ;
+VAL_ 1038 LAUNCH_STATE 3 "Disengaged - DIS" 2 "Engaged - ENG" 1 "Active - ACT" 0 "Not Active - NOTA" ;
+VAL_ 1036 ENG_FLAG 32768 "RPM limiter active" 16384 "Launch switch pressed" 8192 "Map switch pressed" 4096 "Over Injection detected" 2048 "Kill switch pressed" 1024 "Engine off for Accel drop sensor" 512 "Engine off for ECU flashing" 256 "Map1 is Valid" 128 "Map2 is Valid" 64 "Map3 is Valid (Only Moto3)" 32 "Not Used" 16 "Not Used" 8 "Not Used" 4 "Not Used" 2 "Not Used" 1 "Not Used" ;
+
